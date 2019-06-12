@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+	<form id='poform'>
+		<label for='recordID'>Record ID</label><br>
+		<input type='text' name='recordID'><br>
+		<label for='email'>Email</label><br>
+		<input type='text' name='email' value='nada@fulhaus.com'><br>
+		<input type='checkbox' name='includeDims' value='true'>Include Dimensions?<br>
+		<input type='checkbox' name='includeVars' value='true'>Include Variants?<br>
+		<input type='submit'>
+	</form>
+</body>
+<script>
+	const isValidElement = element => { return element.name && element.value; };
+	const isValidValue = element => {
+		return (!(element.type == 'checkbox') || element.checked);
+	};
+	const formToJSON = elements => [].reduce.call(elements, (data, element) => {
+		if (isValidElement(element) && isValidValue(element)) {
+			data[element.name] = element.value;	
+		}
+		//test line
+		//document.getElementById('output').innerHTML = JSON.stringify(data);
+		return data;
+	}, {});
+	const handleFormSubmit = event => {
+		event.preventDefault();
+		const data = formToJSON(poform.elements);
+		var xreq = new XMLHttpRequest();
+		xreq.open("POST", 'https://cpkyuckd80.execute-api.us-east-2.amazonaws.com/default/pullPO', false);
+		//xreq.timeout = 60000;
+		xreq.send(JSON.stringify(data));
+	}
+	const form = document.getElementById('poform');
+	form.addEventListener('submit', handleFormSubmit);
+</script>
+</html>
