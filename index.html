@@ -14,7 +14,7 @@
 		<select name="currency">
 			<option value="USD">USD</option>
 			<option value="CAD">CAD</option>
-		</select> 
+		</select><br>
 		<input type='checkbox' name='includeDims' value='true'>Include Dimensions?<br>
 		<input type='checkbox' name='includeVars' value='true'>Include Variants?<br>
 		<input type='submit'>
@@ -42,7 +42,7 @@
 			data[element.name] = element.value;	
 		}
 		//test line
-		//document.getElementById('output').innerHTML = JSON.stringify(data);
+		document.getElementById('output').innerHTML = JSON.stringify(data);
 		return data;
 	}, {});
 	const handleFormSubmit = event => {
